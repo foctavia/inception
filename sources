@@ -1,0 +1,12 @@
+SOURCES
+
+--> https://tuto.grademe.fr/inception/#accueil
+tutorial on how to build the inception project
+
+o WORDPRESS
+
+--> https://github.com/php/php-src/blob/master/sapi/fpm/www.conf.in
+original source code of PHP base configuration
+
+--> https://myjeeva.com/php-fpm-configuration-101.html
+explanation and guidance on PHP configuration
