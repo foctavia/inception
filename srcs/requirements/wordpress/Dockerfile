@@ -20,21 +20,18 @@ RUN			chown -R root:root /var/www/wordpress
 # add configuration for php
 COPY		./conf/www.conf /etc/php/7.3/fpm/pool.d
 
+# create a folder for php to run
+RUN			mkdir /run/php
+
 # install CLI to automatically configure wordpress
 RUN			wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN			chmod +x wp-cli.phar
 RUN			mv wp-cli.phar /usr/local/bin/wp
 
-# create a folder for php to run
-RUN			mkdir /run/php
-
+# create a wordpress base config file
 COPY		./conf/wp-config.php /var/www/html/wp-config.php
 
-# # launch a script to configure wordpress
-# COPY		./conf/auto_config.sh /usr/local/bin/
-# RUN			chmod +x /usr/local/bin/auto_config.sh
-# ENTRYPOINT	["/usr/local/bin/auto_config.sh"]
-
-WORKDIR		/var/www/html/
-
-CMD			[ "/usr/sbin/php-fpm7.3", "-F" ]
+# launch a script to create users
+COPY		./conf/auto_config.sh /var/www/html/
+RUN			chmod +x /var/www/html/auto_config.sh
+ENTRYPOINT	["/var/www/html/auto_config.sh"]
