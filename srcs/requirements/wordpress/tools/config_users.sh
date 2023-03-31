@@ -4,7 +4,7 @@ cd /var/www/wordpress
 
 if [-e wp-config.php]
 then
-	echo "Wordpress already configured"
+	echo "Wordpress is already configured"
 else
 	sleep 10
 
