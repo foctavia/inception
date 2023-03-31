@@ -1,17 +1,37 @@
+D_COMPOSE = srcs/docker-compose.yml
+
+DB_DATA = /home/foctavia/data/mariadb
+WP_DATA = /home/foctavia/data/wordpress
+
 all:
-	docker compose -f ./srcs/docker-compose.yml up -d --build
+	mkdir -p ${DB_DATA}
+	mkdir -p ${WP_DATA}
+	docker compose -f ${D_COMPOSE} up -d --build
+
+build:
+	docker compose -f ${D_COMPOSE} up -d --build
+
+up:
+	docker compose -f ${D_COMPOSE} up
 
 down:
-	docker compose -f ./srcs/docker-compose.yml down
+	docker compose -f ${D_COMPOSE} down
 
-re:
-	docker compose -f srcs/docker-compose.yml up -d --build
+stop:
+	docker compose -f ${D_COMPOSE} stop
 
-clean:
-	docker stop $$(docker ps -qa);\
-	docker rm $$(docker ps -qa);\
-	docker rmi -f $$(docker images -qa);\
-	docker volume rm $$(docker volume ls -q);\
-	docker network rm $$(docker network ls -q);\
+clean: down
+	
+fclean: clean
+	sudo rm -rf ${DB_DATA}
+	sudo rm -rf ${WP_DATA}
 
-.PHONY: all re down clean
+re: fclean
+	make all
+
+prune:
+	docker system prune -a --force
+	docker volume prune --force
+	docker network prune --force
+
+.PHONY: all build up down stop clean fclean re prune
