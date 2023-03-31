@@ -28,10 +28,7 @@ RUN			wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.
 RUN			chmod +x wp-cli.phar
 RUN			mv wp-cli.phar /usr/local/bin/wp
 
-# create a wordpress base config file
-COPY		./conf/wp-config.php /var/www/html/wp-config.php
-
-# launch a script to create users
-COPY		./conf/auto_config.sh /var/www/html/
-RUN			chmod +x /var/www/html/auto_config.sh
-ENTRYPOINT	["/var/www/html/auto_config.sh"]
+# launch a script to create wp config file and users
+COPY		./tools/config_users.sh /
+RUN			chmod +x ./config_users.sh
+ENTRYPOINT	["./config_users.sh"]

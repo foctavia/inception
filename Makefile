@@ -22,11 +22,11 @@ stop:
 
 clean: down
 	
-fclean: clean
+fclean: clean prune
 	sudo rm -rf ${DB_DATA}
 	sudo rm -rf ${WP_DATA}
 
-re: fclean
+re: clean
 	make all
 
 prune:
