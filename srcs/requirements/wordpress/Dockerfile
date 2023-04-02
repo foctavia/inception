@@ -11,10 +11,10 @@ RUN			apt-get install -y php7.3 \
 			mariadb-client
 
 # download and install wordpress
-RUN			wget https://wordpress.org/wordpress-6.2.tar.gz -P /var/www
+RUN			wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www
 RUN			cd /var/www \
-			&& tar -xzf wordpress-6.2.tar.gz \
-			&& rm wordpress-6.2.tar.gz
+			&& tar -xzf wordpress-6.0.tar.gz \
+			&& rm wordpress-6.0.tar.gz
 RUN			chown -R root:root /var/www/wordpress
 
 # add configuration for php

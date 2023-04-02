@@ -17,8 +17,14 @@ up:
 down:
 	docker compose -f ${D_COMPOSE} down
 
+start:
+	docker compose -f ${D_COMPOSE} start
+
 stop:
 	docker compose -f ${D_COMPOSE} stop
+
+ps:
+	docker compose -f ${D_COMPOSE} ps
 
 clean: down
 	
@@ -26,7 +32,7 @@ fclean: clean prune
 	sudo rm -rf ${DB_DATA}
 	sudo rm -rf ${WP_DATA}
 
-re: clean
+re: fclean
 	make all
 
 prune:
@@ -34,4 +40,4 @@ prune:
 	docker volume prune --force
 	docker network prune --force
 
-.PHONY: all build up down stop clean fclean re prune
+.PHONY: all build up down start stop ps clean fclean re prune
