@@ -20,6 +20,9 @@ down:
 stop:
 	docker compose -f ${D_COMPOSE} stop
 
+start:
+	docker compose -f ${D_COMPOSE} start
+
 clean: down
 	
 fclean: clean prune
@@ -34,4 +37,4 @@ prune:
 	docker volume prune --force
 	docker network prune --force
 
-.PHONY: all build up down stop clean fclean re prune
+.PHONY: all build up down stop start clean fclean re prune

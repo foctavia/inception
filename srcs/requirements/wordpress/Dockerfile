@@ -11,10 +11,10 @@ RUN			apt-get install -y php7.3 \
 			mariadb-client
 
 # download and install wordpress
-RUN			wget https://wordpress.org/wordpress-6.2.tar.gz -P /var/www
+RUN			wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www
 RUN			cd /var/www \
-			&& tar -xzf wordpress-6.2.tar.gz \
-			&& rm wordpress-6.2.tar.gz
+			&& tar -xzf wordpress-6.0.tar.gz \
+			&& rm wordpress-6.0.tar.gz
 RUN			chown -R root:root /var/www/wordpress
 
 # add configuration for php
@@ -27,6 +27,11 @@ RUN			mkdir /run/php
 RUN			wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN			chmod +x wp-cli.phar
 RUN			mv wp-cli.phar /usr/local/bin/wp
+
+# obtain redis cache backend script (bonus)
+RUN			wget https://assets.digitalocean.com/articles/wordpress_redis/object-cache.php
+RUN			chmod +x object-cache.php
+RUN			mv object-cache.php /var/www/wordpress/wp-content/
 
 # launch a script to create wp config file and users
 COPY		./tools/config_users.sh /
